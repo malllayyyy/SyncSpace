@@ -30,11 +30,8 @@ export default class Network {
   mySessionId!: string
 
   constructor() {
-    const protocol = window.location.protocol.replace('http', 'ws')
-    const endpoint =
-      process.env.NODE_ENV === 'production'
-        ? import.meta.env.VITE_SERVER_URL
-        : `${protocol}//${window.location.hostname}:2567`
+    // Force endpoint to use the server's IPv4 address directly
+    const endpoint = 'ws://192.168.0.100:3005'; // <-- Replace with your server's actual IPv4 if different
     this.client = new Client(endpoint)
     this.joinLobbyRoom().then(() => {
       store.dispatch(setLobbyJoined(true))
